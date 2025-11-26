@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uchiha Bot Hub | Discord Bot Network</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Using 'Bangers' for Anime headers and 'Roboto' for text -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --uchiha-red: #ff0000;
+            --uchiha-dark-red: #8b0000;
+            --bg-black: #0a0a0a;
+            --card-bg: #141414;
+            --text-white: #ffffff;
+            --text-gray: #b3b3b3;
+            --glow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            background-image: radial-gradient(circle at 50% 50%, #1a0000 0%, #000000 100%);
+            color: var(--text-white);
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Bangers', cursive;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --- SHARINGAN ANIMATION (Pure CSS) --- */
+        .sharingan-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            position: relative;
+            animation: spin 4s linear infinite;
+        }
+
+        .eye {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #000 15%, #ff0000 16%, #cc0000 70%, #8b0000 100%);
+            border-radius: 50%;
+            border: 3px solid #000;
+            position: relative;
+            box-shadow: 0 0 20px var(--uchiha-red);
+        }
+
+        .tomoe {
+            width: 15px;
+            height: 15px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+        
+        /* Positioning 3 Tomoe in a triangle */
+        .tomoe:nth-child(1) { transform: translate(-50%, -35px); }
+        .tomoe:nth-child(1)::after { content: ''; position: absolute; top: -5px; left: -2px; width: 6px; height: 12px; background: #000; border-radius: 50%; transform: rotate(30deg); }
+        
+        .tomoe:nth-child(2) { transform: translate(20px, 10px) rotate(120deg); }
+        .tomoe:nth-child(2)::after { content: ''; position: absolute; top: -5px; left: -2px; width: 6px; height: 12px; background: #000; border-radius: 50%; transform: rotate(30deg); }
+
+        .tomoe:nth-child(3) { transform: translate(-35px, 10px) rotate(240deg); }
+        .tomoe:nth-child(3)::after { content: ''; position: absolute; top: -5px; left: -2px; width: 6px; height: 12px; background: #000; border-radius: 50%; transform: rotate(30deg); }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- HEADER --- */
+        header {
+            text-align: center;
+            padding: 80px 20px 40px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        header h1 {
+            font-size: 4rem;
+            color: var(--uchiha-red);
+            text-shadow: 0 0 10px var(--uchiha-dark-red);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+        }
+
+        /* --- BOT GRID --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .bot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px 0;
+        }
+
+        .bot-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Red top border for style */
+        .bot-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--uchiha-red);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .bot-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+            border-color: var(--uchiha-red);
+        }
+
+        .bot-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .bot-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid var(--uchiha-red);
+            object-fit: cover;
+            background-color: #000;
+        }
+
+        .bot-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .bot-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #2a0a0a;
+            color: var(--uchiha-red);
+            border: 1px solid var(--uchiha-dark-red);
+            font-size: 0.8rem;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .bot-card p {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        /* FIXED: Added z-index to ensure buttons are clickable above other elements */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-invite {
+            background: var(--uchiha-dark-red);
+            color: white;
+            border: 1px solid var(--uchiha-red);
+        }
+
+        .btn-invite:hover {
+            background: var(--uchiha-red);
+            box-shadow: 0 0 10px var(--uchiha-red);
+        }
+
+        .btn-support {
+            background: transparent;
+            color: var(--text-gray);
+            border: 1px solid #444;
+        }
+
+        .btn-support:hover {
+            border-color: #fff;
+            color: #fff;
+        }
+
+        /* --- SUPPORT SECTION (Centered) --- */
+        .support-section {
+            background: #111;
+            padding: 60px 20px;
+            margin-top: 40px;
+            border-top: 2px solid var(--uchiha-dark-red);
+        }
+
+        .support-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .discord-embed {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            border: 1px solid #333;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-size: 0.8rem;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- HERO HEADER -->
+    <header>
+        <div class="sharingan-container">
+            <div class="eye">
+                <div class="tomoe"></div>
+                <div class="tomoe"></div>
+                <div class="tomoe"></div>
+            </div>
+        </div>
+        <h1>Uchiha Bot Hub</h1>
+        <p>The Ultimate Ninja Tool Collection for Discord</p>
+    </header>
+
+    <!-- BOTS GRID -->
+    <div class="container">
+        <div class="bot-grid">
+            
+            <!-- Bot 1: Goku -->
+            <div class="bot-card">
+                <!-- Make sure file name is exactly goku.jpg -->
+                <img src="goku.jpg" alt="Goku Bot" class="bot-icon">
+                <h3>Goku</h3>
+                <span class="bot-tag">Simple Moderation</span>
+                <p>Powerful yet simple moderation tools to protect your server from villains. Basic kick, ban, and purge commands.</p>
+                <div class="btn-group">
+                    <a href="https://discord.com/oauth2/authorize?client_id=1441095933394681937&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" class="btn btn-invite">Invite</a>
+                    <a href="https://discord.gg/bUSQ2Q5Qsd" target="_blank" class="btn btn-support">Support</a>
+                </div>
+            </div>
+
+            <!-- Bot 2: Kakashi -->
+            <div class="bot-card">
+                <!-- Make sure file name is exactly kakashi.jpg -->
+                <img src="kakashi.jpg" alt="Kakashi Bot" class="bot-icon">
+                <h3>Kakashi</h3>
+                <span class="bot-tag">Advanced Moderation</span>
+                <p>The copy ninja of moderation. Advanced logging, automod features, anti-raid protection, and detailed user analytics.</p>
+                <div class="btn-group">
+                    <a href="https://discord.com/oauth2/authorize?client_id=1441316451502915604&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" class="btn btn-invite">Invite</a>
+                    <a href="https://discord.gg/bUSQ2Q5Qsd" target="_blank" class="btn btn-support">Support</a>
+                </div>
+            </div>
+
+            <!-- Bot 3: Usopp -->
+            <div class="bot-card">
+                <!-- Make sure file name is exactly usopp.jpg -->
+                <img src="usopp.jpg" alt="Usopp Bot" class="bot-icon">
+                <h3>Usopp</h3>
+                <span class="bot-tag">Fun & Games</span>
+                <p>The sniper king of entertainment! Minigames, memes, economy system, and tall tales to keep your chat active.</p>
+                <div class="btn-group">
+                    <a href="https://discord.com/oauth2/authorize?client_id=1441699923409113179&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" class="btn btn-invite">Invite</a>
+                    <a href="https://discord.gg/bUSQ2Q5Qsd" target="_blank" class="btn btn-support">Support</a>
+                </div>
+            </div>
+
+            <!-- Bot 4: Ticket Bot -->
+            <div class="bot-card">
+                <!-- Make sure file name is exactly ticket.jpg -->
+                <img src="ticket.jpg" alt="Ticket Bot" class="bot-icon">
+                <h3>Ticket Bot</h3>
+                <span class="bot-tag">Utility / Support</span>
+                <p>Professional ticket system with transcripts. Manage your server inquiries like a true hidden village administration.</p>
+                <div class="btn-group">
+                    <a href="https://discord.com/oauth2/authorize?client_id=1442163864044048495&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" class="btn btn-invite">Invite</a>
+                    <a href="https://discord.gg/bUSQ2Q5Qsd" target="_blank" class="btn btn-support">Support</a>
+                </div>
+            </div>
+
+            <!-- Bot 5: Obito -->
+            <div class="bot-card">
+                <!-- Make sure file name is exactly obito.jpg -->
+                <img src="obito.jpg" alt="Obito Bot" class="bot-icon">
+                <h3>Obito</h3>
+                <span class="bot-tag">Welcome & Fun</span>
+                <p>Welcomes new members to your Infinite Tsukuyomi (Server). Highly customizable welcome cards and greeting messages.</p>
+                <div class="btn-group">
+                    <a href="https://discord.com/oauth2/authorize?client_id=1442486886323982426&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" class="btn btn-invite">Invite</a>
+                    <a href="https://discord.gg/bUSQ2Q5Qsd" target="_blank" class="btn btn-support">Support</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SUPPORT SECTION (Centered) -->
+    <section id="support" class="support-section">
+        <div class="support-container">
+            <h2 style="text-align: center; margin-bottom: 40px; color: var(--uchiha-red);">Support Headquarters</h2>
+            
+            <!-- Discord Widget -->
+            <div class="discord-embed">
+                <h3>Join the Hideout</h3>
+                <p style="margin-bottom: 20px;">Need help? Join our official support server.</p>
+                
+                <iframe src="https://discord.com/widget?id=1172059377276231711&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                
+                <br><br>
+                <a href="https://discord.gg/bUSQ2Q5Qsd" target="_blank" class="btn btn-invite">Join Server</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <p>&copy; 2025 Uchiha Bot Hub. Designed for Discord.</p>
+    </div>
+
+</body>
+</html>
